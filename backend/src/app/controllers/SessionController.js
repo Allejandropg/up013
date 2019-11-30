@@ -44,11 +44,10 @@ class SessionController {
 
     try {
       const decoded = await jwt.verify(token, authConfig.secret);
-      const { id, date } = decoded;
       /**
        * Check past dates
        */
-      if (isBefore(parseISO(date), new Date())) {
+      if (isBefore(parseISO(decoded.date), new Date())) {
         return res.status(400).json({ erro: 'Past dates are not permitted' });
       }
     } catch (err) {
@@ -66,7 +65,7 @@ class SessionController {
         },
       ],
     });
-    if (!user && user.id !== id) {
+    if (!user && user.id !== decoded.id) {
       return res.status(401).json({ error: 'User not found!' });
     }
 

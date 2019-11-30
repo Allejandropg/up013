@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { signInSuccess, signFailure } from './actions';
+import { signInSuccess,signInRegisterSuccess, signFailure } from './actions';
 
 export function* signIn({ payload }) {
   try {
@@ -17,8 +17,14 @@ export function* signIn({ payload }) {
 
     const { token, user } = response.data;
 
+    if (!user.is_active) {
+      toast.error('usuário não foi ativado, cheque seu e-mail.');
+      yield put(signFailure());
+      return;
+    }
     if (!user.provider) {
       toast.error('usuário não é prestador');
+      yield put(signFailure());
       return;
     }
 
@@ -44,10 +50,6 @@ export function* signInRegister({ payload }) {
 
     const { user } = response.data;
 
-    if(user.error){
-      toast.error('Link inválido');
-      return;
-    }
     if (!user.provider) {
       toast.error('usuário não é prestador');
       return;
@@ -55,9 +57,9 @@ export function* signInRegister({ payload }) {
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(signInSuccess(token, user));
+    yield put(signInRegisterSuccess(token, user));
 
-    history.push('/dashboard');
+    history.push('/profile');
   } catch (error) {
     toast.error('Falha na autenticação, verifique seus dados.');
     yield put(signFailure());
@@ -82,6 +84,27 @@ export function* signUp({ payload }) {
   }
 }
 
+export function* changePass({ payload }) {
+  try {
+    const {  passwordO, passwordN, passwordNC } = payload;
+    if(passwordO===passwordN || passwordN!== passwordNC){
+      toast.error('Informações incorretas.');
+      yield put(signFailure());
+      return
+    }
+    /*yield call(api.put, 'users', {
+      name,
+      email,
+      password,
+      provider: true,
+    });*/
+
+    history.push('/');
+  } catch (error) {
+    toast.error('Informações incorretas.');
+    yield put(signFailure());
+  }
+}
 export function setToken({ payload }) {
   if (!payload) return;
 

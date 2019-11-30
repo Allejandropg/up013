@@ -25,7 +25,19 @@ export function signInRegisterRequest(email, password, token) {
     payload: { email, password, token },
   };
 }
+export function signInRegisterSuccess(token, user) {
+  return {
+    type: '@auth/SIGN_IN_REGISTER_SUCCESS',
+    payload: { token, user },
+  };
+}
 
+export function passChangeInRequest(passwordO,passwordN,passwordNC) {
+  return {
+    type: '@auth/PASS_IN_REQUEST',
+    payload: { passwordO, passwordN, passwordNC },
+  };
+}
 export function signFailure() {
   return {
     type: '@auth/SIGN_FAILURE',
