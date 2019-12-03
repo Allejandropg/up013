@@ -21,6 +21,9 @@ export const Container = styled.div`
       &::placeholder {
         color: rgba(255, 255, 255, 0.7);
       }
+      &[type="password"]{
+        border: 2px solid;
+      }
     }
     span {
       color: #fb6f91;

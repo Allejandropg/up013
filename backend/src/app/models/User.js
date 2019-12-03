@@ -1,4 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
+import { addDays, addMinutes, parseISO } from 'date-fns';
 import bcrypt from 'bcryptjs';
 
 class User extends Model {
@@ -20,6 +21,7 @@ class User extends Model {
     this.addHook('beforeSave', async user => {
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
+        user.password_time = addMinutes(parseISO(new Date()),3)
       }
     });
     return this;

@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { parseISO, isBefore } from 'date-fns';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
@@ -14,6 +15,7 @@ export default function RouteWrapper({
   ...rest
 }) {
   const { signed } = store.getState().auth;
+  const { profile } = store.getState().user;
 
   if (!signed && isPrivate) {
     return <Redirect to="/" />;
@@ -21,7 +23,7 @@ export default function RouteWrapper({
   if (signed && !isPrivate) {
     return <Redirect to="/profile" />;
   }
-
+  console.tron.log('Route.js',store.getState())
   const Layout = signed ? DefaultLayout : AuthLayout;
 
   return (

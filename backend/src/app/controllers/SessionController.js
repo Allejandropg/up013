@@ -25,7 +25,7 @@ class SessionController {
        return res.status(401).json({ error: 'Password does not match' });
     }
 
-    const { id, name, avatar, provider, is_active } = user;
+    const { id, name, avatar, provider, password_time, is_active } = user;
     // console.log('aqui', id, name, avatar, provider )
     return res.json({
       user: {
@@ -34,6 +34,7 @@ class SessionController {
         email,
         avatar,
         provider,
+        password_time,
         is_active
       },
       token: jwt.sign({ id }, authConfig.secret, {
@@ -75,7 +76,7 @@ class SessionController {
 
     await user.update({password});
 
-    const { id, name, avatar, provider, is_active } = user;
+    const { id, name, avatar, provider, password_time, is_active } = user;
     return res.json({
       user: {
         id,
@@ -83,6 +84,7 @@ class SessionController {
         email,
         avatar,
         provider,
+        password_time,
         is_active
       },
       token: jwt.sign({ id }, authConfig.secret, {
