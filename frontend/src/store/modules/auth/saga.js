@@ -14,7 +14,7 @@ export function* signIn({ payload }) {
       email,
       password,
     });
-
+    // console.tron.log('try', response);
     const { token, user } = response.data;
 
     if (!user.is_active) {
@@ -22,25 +22,26 @@ export function* signIn({ payload }) {
       yield put(signFailure());
       return;
     }
+
     if (!user.provider) {
       toast.error('usuário não é prestador');
       yield put(signFailure());
       return;
     }
-
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
     yield put(signInSuccess(token, user));
-
     history.push('/dashboard');
   } catch (error) {
-    toast.error('Falha na autenticação, verifique seus dados.');
+    toast.error('Falha na autenticação, verifique seus dados.'+error);
     yield put(signFailure());
   }
 }
+
+
 export function* signInRegister({ payload }) {
   try {
-    const { email, password, token } = payload;
+    let { email, password, token } = payload;
 
     const response = yield call(api.post, 'sessions/token', {
       email,
@@ -48,7 +49,8 @@ export function* signInRegister({ payload }) {
       token
     });
 
-    const { user } = response.data;
+    const user = response.data.user;
+    token = response.data.token;
 
     if (!user.provider) {
       toast.error('usuário não é prestador');
@@ -59,6 +61,16 @@ export function* signInRegister({ payload }) {
 
     yield put(signInRegisterSuccess(token, user));
 
+    try {
+      const profile = {
+        name:user.name,
+        email,
+        is_active: true
+      };
+      yield call(api.put, 'users', profile);
+    } catch (err) {
+
+    }
     history.push('/profile');
   } catch (error) {
     toast.error('Falha na autenticação, verifique seus dados.');
@@ -84,27 +96,6 @@ export function* signUp({ payload }) {
   }
 }
 
-export function* changePass({ payload }) {
-  try {
-    const {  passwordO, passwordN, passwordNC } = payload;
-    if(passwordO===passwordN || passwordN!== passwordNC){
-      toast.error('Informações incorretas.');
-      yield put(signFailure());
-      return
-    }
-    /*yield call(api.put, 'users', {
-      name,
-      email,
-      password,
-      provider: true,
-    });*/
-
-    history.push('/');
-  } catch (error) {
-    toast.error('Informações incorretas.');
-    yield put(signFailure());
-  }
-}
 export function setToken({ payload }) {
   if (!payload) return;
 
@@ -115,9 +106,71 @@ export function setToken({ payload }) {
   }
 }
 
+export function signOut() {
+  history.push('/');
+}
+
+
+export function* sendNewPass({ payload }) {
+  try {
+    const { email } = payload;
+    console.tron.log('sendNewPass',payload);
+    yield call(api.post, '/users/forgotpassword/', {
+      email,
+    });
+
+    history.push('/');
+  } catch (error) {
+    toast.error('Falha no envio, tente novamente mais tarde: '+error);
+    yield put(signFailure());
+  }
+}
+
+export function* signInForgotRequest({ payload }) {
+  try {
+    let { email, password, token } = payload;
+console.tron.log('forgotSaga',payload)
+    const response = yield call(api.put, '/sessions/updateForgot/', {
+      email,
+      password,
+      token
+    });
+
+    const user = response.data.user;
+    token = response.data.token;
+
+    if (!user.provider) {
+      toast.error('usuário não é prestador');
+      return;
+    }
+
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
+    yield put(signInRegisterSuccess(token, user));
+
+    try {
+      const profile = {
+        name:user.name,
+        email,
+        is_active: true
+      };
+      yield call(api.put, 'users', profile);
+    } catch (err) {
+
+    }
+    history.push('/profile');
+  } catch (error) {
+    toast.error('Falha na autenticação, verifique seus dados.'+error);
+    yield put(signFailure());
+  }
+}
+
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_IN_REGISTER_REQUEST', signInRegister),
+  takeLatest('@auth/SIGN_IN_FORGOT_REQUEST', signInForgotRequest),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
+  takeLatest('@auth/SIGN_OUT', signOut),
+  takeLatest('@auth/SEND_NEW_PASS', sendNewPass),
 ]);

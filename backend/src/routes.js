@@ -18,8 +18,10 @@ const upload = multer(multerConfig);
 
 routes.get('/users', UserController.read);
 routes.post('/users', UserController.store);
-routes.post('/sessions', SessionController.store);
-routes.post('/sessions/token', SessionController.storeRegister);
+routes.post('/users/forgotpassword/', UserController.send);
+routes.post('/sessions/', SessionController.store);
+// routes.post('/sessions/token/', SessionController.storeRegister);
+routes.put('/sessions/updateForgot/', SessionController.updateForgot);
 
 routes.use(authMiddleware);
 // users

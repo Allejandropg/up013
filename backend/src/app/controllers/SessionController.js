@@ -3,7 +3,6 @@ import {  parseISO, isBefore } from 'date-fns';
 import User from '../models/User';
 import File from '../models/File';
 import authConfig from '../../config/auth';
-import { promisify } from 'util';
 
 class SessionController {
   async store(req, res) {
@@ -23,9 +22,11 @@ class SessionController {
     }
 
     if (!(await user.checkPassword(password))) {
-      return res.status(401).json({ error: 'Password does not match' });
+       return res.status(401).json({ error: 'Password does not match' });
     }
-    const { id, name, avatar, provider } = user;
+
+    const { id, name, avatar, provider, is_active } = user;
+    // console.log('aqui', id, name, avatar, provider )
     return res.json({
       user: {
         id,
@@ -33,13 +34,15 @@ class SessionController {
         email,
         avatar,
         provider,
+        is_active
       },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
     });
   }
-  async storeRegister(req, res) {
+
+  async updateForgot(req, res) {
     const { email, password, token } = req.body;
 
     try {
@@ -65,14 +68,14 @@ class SessionController {
         },
       ],
     });
+
     if (!user && user.id !== decoded.id) {
       return res.status(401).json({ error: 'User not found!' });
     }
 
-    if (!(await user.checkPassword(password))) {
-      return res.status(401).json({ error: 'Password does not match' });
-    }
-    const { id, name, avatar, provider } = user;
+    await user.update({password});
+
+    const { id, name, avatar, provider, is_active } = user;
     return res.json({
       user: {
         id,
@@ -80,6 +83,7 @@ class SessionController {
         email,
         avatar,
         provider,
+        is_active
       },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,

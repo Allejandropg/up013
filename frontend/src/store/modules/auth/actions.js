@@ -25,9 +25,24 @@ export function signInRegisterRequest(email, password, token) {
     payload: { email, password, token },
   };
 }
+
 export function signInRegisterSuccess(token, user) {
   return {
     type: '@auth/SIGN_IN_REGISTER_SUCCESS',
+    payload: { token, user },
+  };
+}
+
+export function signInForgotRequest(email, password, token) {
+  return {
+    type: '@auth/SIGN_IN_FORGOT_REQUEST',
+    payload: { email, password, token },
+  };
+}
+
+export function signInForgotSuccess(token, user) {
+  return {
+    type: '@auth/SIGN_IN_FORGOT_SUCCESS',
     payload: { token, user },
   };
 }
@@ -41,5 +56,18 @@ export function passChangeInRequest(passwordO,passwordN,passwordNC) {
 export function signFailure() {
   return {
     type: '@auth/SIGN_FAILURE',
+  };
+}
+
+export function signOut() {
+  return {
+    type: '@auth/SIGN_OUT',
+  };
+}
+
+export function sendNewPass(email){
+  return {
+    type:'@auth/SEND_NEW_PASS',
+    payload: { email },
   };
 }

@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
-import { signInRequest, signInRegisterRequest } from '~/store/modules/auth/actions';
+import { signInRequest, signInRegisterRequest, signInForgotRequest } from '~/store/modules/auth/actions';
 
 import logo from '~/assets/logo.svg';
 
@@ -21,10 +21,16 @@ export default function SignIn() {
   const loading = useSelector(state => state.auth.loading);
 
   function handleSubmit({ email, password }) {
-    if(!token){
-      dispatch(signInRequest(email, password));
+    const pathName = window.location.pathname.split('/');
+    if(pathName[1]==='forgot'){
+      console.log(email, password, token)
+      dispatch(signInForgotRequest(email, password, token));
     }else{
-      dispatch(signInRegisterRequest(email, password, token))
+      if(!token){
+        dispatch(signInRequest(email, password));
+      }else{
+        dispatch(signInRegisterRequest(email, password, token))
+      }
     }
   }
 

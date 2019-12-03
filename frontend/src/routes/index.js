@@ -14,6 +14,7 @@ export default function Routes() {
     <Switch>
       <Route path="/" exact component={SignIn} />
       <Route path="/welcome/:token" exact component={SignIn} />
+      <Route path="/forgot/:token" exact component={SignIn} />
       <Route path="/register" component={SignUp} />
       <Route path="/forgot-password" component={ForgotPassword} />
 
