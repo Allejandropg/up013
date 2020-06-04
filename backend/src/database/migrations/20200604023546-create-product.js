@@ -1,6 +1,8 @@
+'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('products', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -11,22 +13,20 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password_hash: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      phone: {
+      description: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      provider: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      stock: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      validity: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      price: {
+        type: Sequelize.DECIMAL(12, 2),
         allowNull: false,
       },
       created_at: {
@@ -45,7 +45,5 @@ module.exports = {
     });
   },
 
-  down: queryInterface => {
-    return queryInterface.dropTable('users');
-  },
+  down: queryInterface => queryInterface.dropTable('products')
 };

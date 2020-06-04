@@ -8,7 +8,7 @@ import {
   isAfter,
 } from 'date-fns';
 import { Op } from 'sequelize';
-import Appointment from '../models/Appointment';
+import Command from '../models/Command';
 
 class AvailableController {
   async index(req, res) {
@@ -17,7 +17,7 @@ class AvailableController {
       return res.status(400).json({ error: 'Date invalid.' });
     }
     const searchDate = Number(date);
-    const appointment = await Appointment.findAll({
+    const command = await Command.findAll({
       where: {
         provider_id: req.params.providerId,
         canceled_at: null,
@@ -52,7 +52,7 @@ class AvailableController {
         value: format(value, "yyyy-MM-dd'T'HH:mm:ssxxx"),
         available:
           isAfter(value, new Date()) &&
-          !appointment.find(a => format(a.date, 'HH:mm') === time),
+          !command.find(a => format(a.date, 'HH:mm') === time),
       };
     });
     return res.json(available);

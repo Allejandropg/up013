@@ -7,7 +7,7 @@ import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController';
 import AvailableController from './app/controllers/AvailableController';
-import AppointmentController from './app/controllers/AppointmentController';
+import CommandController from './app/controllers/CommandController';
 import NotificationController from './app/controllers/NotificationController';
 
 import authMiddleware from './app/middlewares/auth';
@@ -20,20 +20,21 @@ routes.get('/users', UserController.read);
 routes.post('/users', UserController.store);
 routes.post('/users/forgotpassword/', UserController.send);
 routes.post('/sessions/', SessionController.store);
-// routes.post('/sessions/token/', SessionController.storeRegister);
+routes.post('/sessions/token/', SessionController.storeRegister);
 routes.put('/sessions/updateForgot/', SessionController.updateForgot);
 
 routes.use(authMiddleware);
 // users
 routes.put('/users', UserController.update);
+
 // providers
 routes.get('/providers', ProviderController.index);
 routes.get('/providers/:providerId/available', AvailableController.index);
 
-// Appointment
-routes.get('/appointments', AppointmentController.index);
-routes.post('/appointments', AppointmentController.store);
-routes.delete('/appointments/:id', AppointmentController.delete);
+// Command
+routes.get('/commands', CommandController.index);
+routes.post('/commands', CommandController.store);
+routes.delete('/commands/:id', CommandController.delete);
 
 // schedules
 routes.get('/schedule', ScheduleController.index);

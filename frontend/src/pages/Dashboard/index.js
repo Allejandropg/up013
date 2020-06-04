@@ -42,7 +42,7 @@ export default function Dashboard() {
         return {
           time: `${hour}:00h`,
           past: isBefore(compareDate, new Date()),
-          appointment: response.data.find(a =>(
+          command: response.data.find(a =>(
             isEqual(parseISO(a.date), compareDate)
           )),
         };
@@ -73,10 +73,10 @@ export default function Dashboard() {
       </header>
       <ul>
         {schedule.map(time => (
-          <Time key={time.time} past={time.past} available={!time.appointment}>
+          <Time key={time.time} past={time.past} available={!time.command}>
             <strong>{time.time}</strong>
             <span>
-              {time.appointment ? time.appointment.user.name : 'Em aberto'}
+              {time.command ? time.command.user.name : 'Em aberto'}
             </span>
           </Time>
         ))}

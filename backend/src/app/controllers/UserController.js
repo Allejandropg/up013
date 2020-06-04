@@ -30,8 +30,8 @@ class UserController {
       return res.status(400).json({ erro: 'User already exists.' });
     }
     try {
-      const result = await User.create({...req.body, password,
-        password_time:  new Date() });
+      const result = await User.create({...req.body, password});
+      // ,// password_time:  new Date()
 
       const user = {
         name: result.name,

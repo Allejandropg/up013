@@ -1,7 +1,7 @@
 import Sequelize, { Model } from 'sequelize';
 import { isBefore, subHours } from 'date-fns';
 
-class Appointment extends Model {
+class Command extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -32,4 +32,4 @@ class Appointment extends Model {
     this.belongsTo(models.User, { foreignKey: 'provider_id', as: 'provider' });
   }
 }
-export default Appointment;
+export default Command;

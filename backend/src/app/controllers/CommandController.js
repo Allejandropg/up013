@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-import Appointment from '../models/Appointment';
+import Command from '../models/Command';
 import User from '../models/User';
 import File from '../models/File';
 import Notification from '../schemas/Notification';
@@ -10,11 +10,11 @@ import Mail from '../../lib/Mail';
 
 // import Qeue from '../../lib/Qeue';
 
-class AppointmentController {
+class CommandController {
   async index(req, res) {
     const { page = 1 } = req.query;
 
-    const appointments = await Appointment.findAll({
+    const commands = await Command.findAll({
       where: { user_id: req.userId, canceled_at: null },
       order: ['date'],
       attributes: ['id', 'date', 'past', 'cancelable'],
@@ -35,7 +35,7 @@ class AppointmentController {
         },
       ],
     });
-    return res.json(appointments);
+    return res.json(commands);
   }
 
   async store(req, res) {
@@ -50,7 +50,7 @@ class AppointmentController {
     if (provider_id === req.userId) {
       return res
         .status(401)
-        .json({ error: "You don't have permission to make the appointment" });
+        .json({ error: "You don't have permission to make the command" });
     }
     /**
      * Check if provide_id is a provider
@@ -62,7 +62,7 @@ class AppointmentController {
     if (!isProvider) {
       return res
         .status(401)
-        .json({ error: 'You can only create appointments with providers' });
+        .json({ error: 'You can only create commands with providers' });
     }
     const hourStart = startOfHour(parseISO(date));
 
@@ -75,7 +75,7 @@ class AppointmentController {
     /**
      * Check date availability
      */
-    const checkAvailability = await Appointment.findOne({
+    const checkAvailability = await Command.findOne({
       where: {
         provider_id,
         canceled_at: null,
@@ -86,14 +86,14 @@ class AppointmentController {
     if (checkAvailability) {
       return res.status(400).json({ erro: 'Appoint date is not available' });
     }
-    const appointment = await Appointment.create({
+    const command = await Command.create({
       user_id: req.userId,
       provider_id,
       date: hourStart,
     });
 
     /**
-     * Notify appointment provider
+     * Notify command provider
      */
     const user = await User.findByPk(req.userId);
     const formattedDate = format(
@@ -106,11 +106,11 @@ class AppointmentController {
       content: `Novo agendamento de ${user.name} para ${formattedDate}`,
       user: provider_id,
     });
-    return res.json(appointment);
+    return res.json(command);
   }
 
   async delete(req, res) {
-    const appointment = await Appointment.findByPk(req.params.id, {
+    const command = await Command.findByPk(req.params.id, {
       include: [
         {
           model: User,
@@ -124,39 +124,39 @@ class AppointmentController {
         },
       ],
     });
-    if (!appointment) {
+    if (!command) {
       return res.status(404).json({
-        error: 'Appointment not found.',
+        error: 'Command not found.',
       });
     }
-    if (appointment.user_id !== req.userId) {
+    if (command.user_id !== req.userId) {
       return res.status(400).json({
-        error: "Yout don't have permission to cancel this appointment",
+        error: "Yout don't have permission to cancel this command",
       });
     }
-    const dateWithSub = subHours(appointment.date, 2);
+    const dateWithSub = subHours(command.date, 2);
 
     if (isBefore(dateWithSub, new Date())) {
       return res.status(400).json({
-        error: "Yout cann't only cancel appointment 2 hours in advance.",
+        error: "Yout cann't only cancel command 2 hours in advance.",
       });
     }
 
-    appointment.canceled_at = new Date();
-    await appointment.save();
+    command.canceled_at = new Date();
+    await command.save();
 
     // FIXME envio de cancelamento
-    // await Qeue.add(CancellationMail.key, { appointment });
+    // await Qeue.add(CancellationMail.key, { command });
 
     await Mail.sendMail({
-      to: `${appointment.provider.name} <${appointment.provider.email}`,
+      to: `${command.provider.name} <${command.provider.email}`,
       subject: 'Agendamento cancelado',
       template: 'cancellation',
       context: {
-        provider: appointment.provider.name,
-        user: appointment.user.name,
+        provider: command.provider.name,
+        user: command.user.name,
         date: format(
-          parseISO(appointment.date),
+          parseISO(command.date),
           "'dia' dd 'de' MMMM', às' H:mm'h'",
           {
             locale: pt,
@@ -165,8 +165,8 @@ class AppointmentController {
       },
     });
 
-    return res.json(appointment);
+    return res.json(command);
   }
 }
 
-export default new AppointmentController();
+export default new CommandController();
