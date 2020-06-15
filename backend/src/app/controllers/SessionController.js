@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import {  parseISO, isBefore } from 'date-fns';
+import { parseISO, isBefore } from 'date-fns';
 import User from '../models/User';
 import File from '../models/File';
 import authConfig from '../../config/auth';
@@ -22,7 +22,7 @@ class SessionController {
     }
 
     if (!(await user.checkPassword(password))) {
-       return res.status(401).json({ error: 'Password does not match' });
+      return res.status(401).json({ error: 'Password does not match' });
     }
 
     const { id, name, avatar, provider, is_active } = user;
@@ -35,7 +35,7 @@ class SessionController {
         avatar,
         provider,
         // password_time,
-        is_active
+        is_active,
       },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
@@ -122,9 +122,9 @@ class SessionController {
       return res.status(401).json({ error: 'User not found!' });
     }
 
-    await user.update({password});
+    await user.update({ password });
 
-    const { id, name, avatar, provider,  is_active } = user;
+    const { id, name, avatar, provider, is_active } = user;
     // password_time,
     return res.json({
       user: {
@@ -134,7 +134,7 @@ class SessionController {
         avatar,
         provider,
         // password_time,
-        is_active
+        is_active,
       },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,

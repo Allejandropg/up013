@@ -20,10 +20,11 @@ module.exports = {
           password_hash: bcrypt.hashSync('123456', 8),
           created_at: new Date(),
           updated_at: new Date(),
-        }
+        },
       ],
-    {});
+      {}
+    );
   },
 
-  down: (queryInterface) => queryInterface.bulkDelete('Users', null, {}),
+  down: queryInterface => queryInterface.bulkDelete('Users', null, {}),
 };

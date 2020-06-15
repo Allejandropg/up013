@@ -39,7 +39,7 @@ class UserController {
         password,
         link: process.env.SITE_URL+'/welcome/'+jwt.sign({
           id: result.id,
-          date: addMinutes(parseISO(new Date()),1)
+          date: addDays(parseISO(new Date()),7)
         },
         authConfig.secret, {
           expiresIn: authConfig.expiresIn,

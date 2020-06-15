@@ -16,6 +16,9 @@ import ScheduleController from './app/controllers/ScheduleController';
 const routes = new Router();
 const upload = multer(multerConfig);
 
+routes.get('/', (req, res) => {
+  return res.status(200).json({ success: ' Acessou' });
+});
 routes.get('/users', UserController.read);
 routes.post('/users', UserController.store);
 routes.post('/users/forgotpassword/', UserController.send);

@@ -24,7 +24,7 @@ class CommandController {
         {
           model: User,
           as: 'provider',
-          attributes: ['id', 'provider'],
+          attributes: ['id', 'name', 'provider'],
           include: [
             {
               model: File,
