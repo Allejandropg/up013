@@ -11,12 +11,18 @@ export const Container = styled.KeyboardAvoidingView.attrs({
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 0 30px;
+  padding: 50px 54px 0;
+`;
+
+export const Title = styled.Text`
+  color: #707070;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 13px;
 `;
 
 export const Form = styled.View`
   align-self: stretch;
-  margin-top: 50px;
 `;
 
 export const FormInput = styled(Input)`
@@ -32,10 +38,8 @@ export const SignLink = styled.TouchableOpacity`
 `;
 
 export const SignLinkText = styled.Text`
-  color: #fff;
+  color: #707070;
   font-size: 16px;
-`;
-
-export const Strong = styled.Text`
+  padding-bottom: 16px;
   font-weight: bold;
 `;

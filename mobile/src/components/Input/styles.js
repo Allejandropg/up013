@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   padding: 0 15px;
   height: 46px;
-  background: rgba(0, 0, 0, 0.1);
+  background: #dedede;
   border-radius: 24px;
 
   flex-direction: row;
@@ -11,10 +11,10 @@ export const Container = styled.View`
 `;
 
 export const Tinput = styled.TextInput.attrs({
-  placeholderTextColor: ' rgb(180, 180, 180)',
+  placeholderTextColor: '#707070',
 })`
   flex: 1;
   font-size: 15px;
   margin-left: 10px;
-  color: rgb(180, 180, 180);
+  color: #707070;
 `;

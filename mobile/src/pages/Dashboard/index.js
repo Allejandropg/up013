@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { withNavigationFocus } from 'react-navigation';
 
+import PropTypes from 'prop-types';
 import api from '~/services/api';
-// import PropTypes from 'prop-types';
 
-import Background from '~/components/Background';
+import BackgroundInternal from '~/components/BackgroundInternal';
 import { Container, Title, List } from './styles';
 import Command from '~/components/Command';
 
@@ -16,6 +16,7 @@ function Dashboard({ isFocused }) {
     const response = await api.get('commands');
     setCommands(response.data);
   }
+
   useEffect(() => {
     loadCommands();
   }, []);
@@ -38,9 +39,9 @@ function Dashboard({ isFocused }) {
   }
 
   return (
-    <Background>
+    <BackgroundInternal>
       <Container>
-        <Title>Agendamentos</Title>
+        <Title>HISTÓRICO</Title>
         <List
           data={commands}
           keyExtractor={item => String(item.id)}
@@ -49,7 +50,7 @@ function Dashboard({ isFocused }) {
           )}
         />
       </Container>
-    </Background>
+    </BackgroundInternal>
   );
 }
 
@@ -59,5 +60,13 @@ Dashboard.navigationOptions = {
   tabBarIcon: ({ tintColor }) => (
     <Icon name="restore" size={20} color={tintColor} />
   ),
+  tabStyle: props => {
+    console.tron.log('tabstyle', props);
+  },
+};
+Dashboard.propTypes = {
+  isFocused: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 export default withNavigationFocus(Dashboard);

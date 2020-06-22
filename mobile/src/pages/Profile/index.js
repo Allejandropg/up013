@@ -1,19 +1,22 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { updateProfileResquest } from '~/store/modules/user/actions';
 import { signOut } from '~/store/modules/auth/actions';
 
-import Background from '~/components/Background';
+import BackgroundInternal from '~/components/BackgroundInternal';
 import {
   Container,
   Title,
   Form,
   FormInput,
   Separator,
+  SubTitle,
   SubmitButton,
-  LogoutButton,
+  LogoutLink,
+  LogoutLinkText,
 } from './styles';
 
 export default function Profile() {
@@ -48,14 +51,15 @@ export default function Profile() {
       })
     );
   }
+
   function handleSignOut() {
     dispatch(signOut());
   }
 
   return (
-    <Background>
+    <BackgroundInternal>
       <Container>
-        <Title>Profile</Title>
+        <Title>MEU PERFIL</Title>
         <Form>
           <FormInput
             icon="person-outline"
@@ -80,9 +84,10 @@ export default function Profile() {
             onSubmitEditing={() => oldPasswordRef.current.focus()}
           />
           <Separator />
+          <SubTitle>Trocar senha:</SubTitle>
           <FormInput
             icon="lock-outline"
-            placeholder="Current Password"
+            placeholder="Sua senha atual"
             value={oldPassword}
             onChangeText={setOldPassword}
             secureTextEntry
@@ -92,7 +97,7 @@ export default function Profile() {
           />
           <FormInput
             icon="lock-outline"
-            placeholder="New Password"
+            placeholder="Nova senha"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -102,7 +107,7 @@ export default function Profile() {
           />
           <FormInput
             icon="lock-outline"
-            placeholder="Confirm Password"
+            placeholder="Confirmar senha nova"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
@@ -110,11 +115,13 @@ export default function Profile() {
             returnKeyType="send"
             onSubmitEditing={handleSubmit}
           />
-          <SubmitButton onPress={handleSubmit}>Update Profile</SubmitButton>
-          <LogoutButton onPress={handleSignOut}>Sign Out</LogoutButton>
+          <SubmitButton onPress={handleSubmit}>ATUALIZAR SENHA</SubmitButton>
+          <LogoutLink onPress={handleSignOut}>
+            <LogoutLinkText>Sair do UP013</LogoutLinkText>
+          </LogoutLink>
         </Form>
       </Container>
-    </Background>
+    </BackgroundInternal>
   );
 }
 

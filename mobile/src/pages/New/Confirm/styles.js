@@ -17,15 +17,15 @@ export const Avatar = styled.Image`
 
 export const Name = styled.Text`
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 28px;
   font-weight: bold;
-  color: #fff;
+  color: #707070;
 `;
 
 export const Time = styled.Text`
   margin-top: 4px;
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.6);
+  color: #707070;
 `;
 export const SubmitButton = styled(Button)`
   align-self: stretch;

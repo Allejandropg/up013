@@ -15,11 +15,13 @@ export default function Button({ children, loading, ...rest }) {
     </Container>
   );
 }
+Button.defaultProps = {
+  loading: false,
+  rest: '',
+};
 
 Button.propTypes = {
   children: PropTypes.string.isRequired,
   loading: PropTypes.bool,
-};
-Button.defaultProps = {
-  loading: false,
+  rest: PropTypes.node,
 };

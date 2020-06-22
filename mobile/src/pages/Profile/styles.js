@@ -4,24 +4,30 @@ import Button from '~/components/Button';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
+  padding: 10px 37px 0;
 `;
+
 export const Title = styled.Text`
-  font-size: 20px;
-  color: rgb(180, 180, 180);
+  font-size: 24px;
+  color: #000000;
   font-weight: bold;
-  align-self: center;
-  margin-top: 20px;
+  margin-bottom: 15px;
 `;
 
 export const Separator = styled.View`
   height: 1px;
   background: rgb(180, 180, 180);
-  margin: 20px 0 30px;
+  margin: 20px 0 15.5px;
+`;
+
+export const SubTitle = styled.Text`
+  font-size: 18px;
+  color: #707070;
+  margin-bottom: 12px;
 `;
 
 export const Form = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: { padding: 30 },
 })`
   align-self: stretch;
 `;
@@ -34,7 +40,13 @@ export const SubmitButton = styled(Button)`
   margin-top: 5px;
   background-color: rgb(6, 11, 97);
 `;
-export const LogoutButton = styled(Button)`
-  margin-top: 10px;
-  background: #f64c75;
+export const LogoutLink = styled.TouchableOpacity`
+  margin-top: 20px;
+  padding-bottom: 16px;
+`;
+
+export const LogoutLinkText = styled.Text`
+  color: #b90008;
+  font-size: 16px;
+  text-align: center;
 `;

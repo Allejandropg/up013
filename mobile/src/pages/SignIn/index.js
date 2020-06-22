@@ -1,22 +1,21 @@
 import React, { useRef, useState } from 'react';
-import { Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
-import Background from '~/components/Background';
-
-import logo from '~/assets/logo.png';
+import BackgroundExternal from '~/components/BackgroundExternal';
 
 import {
   Container,
+  Title,
   Form,
   FormInput,
+  ForgotLink,
+  ForgotLinkText,
   SubmitButton,
   SignLink,
   SignLinkText,
-  Strong,
 } from './styles';
 
 export default function SignIn({ navigation }) {
@@ -31,10 +30,9 @@ export default function SignIn({ navigation }) {
   }
 
   return (
-    <Background>
+    <BackgroundExternal>
       <Container>
-        <Image source={logo} />
-
+        <Title>Login</Title>
         <Form>
           <FormInput
             icon="mail-outline"
@@ -57,18 +55,21 @@ export default function SignIn({ navigation }) {
             value={password}
             onChangeText={setPassword}
           />
+
+          <ForgotLink onPress={() => navigation.navigate('Forgot')}>
+            <ForgotLinkText>Esqueci a senha</ForgotLinkText>
+          </ForgotLink>
           <SubmitButton loading={loading} onPress={handleSubmit}>
-            Sign In
+            Entrar
           </SubmitButton>
         </Form>
 
         <SignLink onPress={() => navigation.navigate('SignUp')}>
-          <SignLinkText>
-            Don’t have an account? <Strong>Sign up</Strong>
-          </SignLinkText>
+          <SignLinkText>Não tem cadastro?</SignLinkText>
+          <SignLinkText>Crie sua conta</SignLinkText>
         </SignLink>
       </Container>
-    </Background>
+    </BackgroundExternal>
   );
 }
 

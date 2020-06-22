@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 
 import { Container, HourList, Hour, Title } from './styles';
 import Background from '~/components/Background';
@@ -61,7 +62,7 @@ SelectDateTime.navigationOptions = ({ navigation }) => ({
         navigation.goBack();
       }}
     >
-      <Icon name="chevron-left" size={20} color="#FFF" />
+      <Icon name="chevron-left" size={20} color="#707070" />
     </TouchableOpacity>
   ),
 });

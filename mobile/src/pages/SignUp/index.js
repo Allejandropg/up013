@@ -1,32 +1,34 @@
 import React, { useRef, useState } from 'react';
-import { Image } from 'react-native';
+// import { Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { signUpRequest } from '~/store/modules/auth/actions';
 
-import Background from '~/components/Background';
+import BackgroundExternal from '~/components/BackgroundExternal';
 
-import logo from '~/assets/logo.png';
+// import logo from '~/assets/logo.png';
 
 import {
   Container,
+  Title,
   Form,
   FormInput,
   SubmitButton,
   SignLink,
   SignLinkText,
-  Strong,
 } from './styles';
 
 export default function SignUp({ navigation }) {
   const dispatch = useDispatch();
 
   const emailRef = useRef();
+  const birthdayRef = useRef();
   const passwordRef = useRef();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [birthday, setBirthday] = useState('');
   const [password, setPassword] = useState('');
 
   const loading = useSelector(state => state.auth.loading);
@@ -37,13 +39,13 @@ export default function SignUp({ navigation }) {
   }
 
   return (
-    <Background>
+    <BackgroundExternal>
       <Container>
-        <Image source={logo} />
+        <Title>Cadastro</Title>
         <Form>
           <FormInput
             icon="person-outline"
-            placeholder="Full Name"
+            placeholder="Nome Completo"
             value={name}
             onChangeText={setName}
             autoCorrect={false}
@@ -53,7 +55,7 @@ export default function SignUp({ navigation }) {
           />
           <FormInput
             icon="mail-outline"
-            placeholder="Email Address"
+            placeholder="E-mail"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -61,11 +63,23 @@ export default function SignUp({ navigation }) {
             autoCapitalize="none"
             ref={emailRef}
             returnKeyType="next"
+            onSubmitEditing={() => birthdayRef.current.focus()}
+          />
+          <FormInput
+            icon="date-range"
+            placeholder="E-mail"
+            value={birthday}
+            onChangeText={setBirthday}
+            keyboardType="date"
+            autoCorrect={false}
+            autoCapitalize="none"
+            ref={birthdayRef}
+            returnKeyType="next"
             onSubmitEditing={() => passwordRef.current.focus()}
           />
           <FormInput
             icon="lock-outline"
-            placeholder="Password"
+            placeholder="Crie uma senha"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -74,16 +88,14 @@ export default function SignUp({ navigation }) {
             onSubmitEditing={handleSubmit}
           />
           <SubmitButton loading={loading} onPress={handleSubmit}>
-            Sign up
+            CRIAR CONTA
           </SubmitButton>
         </Form>
         <SignLink onPress={() => navigation.navigate('SignIn')}>
-          <SignLinkText>
-            Already have an account? <Strong>Log in</Strong>
-          </SignLinkText>
+          <SignLinkText>Já possuo cadastro</SignLinkText>
         </SignLink>
       </Container>
-    </Background>
+    </BackgroundExternal>
   );
 }
 

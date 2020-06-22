@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { formatRelative, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 
 import { Container, Avatar, Name, Time, SubmitButton } from './styles';
 import Background from '~/components/Background';
@@ -16,6 +17,9 @@ export default function Confirm({ navigation }) {
   const dateFormatted = useMemo(() =>
     formatRelative(parseISO(time), new Date(), { locale: pt })
   );
+  // useEffect(() => {
+  //   // console.tron.log('confirm', time);
+  // }, [time]);
 
   async function handleAddCommand() {
     await api.post(`commands`, {
@@ -53,7 +57,14 @@ Confirm.navigationOptions = ({ navigation }) => ({
         navigation.goBack();
       }}
     >
-      <Icon name="chevron-left" size={20} color="#FFF" />
+      <Icon name="chevron-left" size={20} color="#707070" />
     </TouchableOpacity>
   ),
 });
+
+Confirm.propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};

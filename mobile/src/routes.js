@@ -36,7 +36,7 @@ export default (signedIn = false) =>
                 {
                   defaultNavigationOptions: {
                     headerTransparent: true,
-                    headerTintColor: '#FFF',
+                    headerTintColor: '#707070',
                     headerLeftContainerStyle: {
                       marginLeft: 20,
                     },
@@ -57,6 +57,7 @@ export default (signedIn = false) =>
             Profile,
           },
           {
+            initialRouteName: 'Profile',
             resetOnBlur: true,
             tabBarOptions: {
               keyboardHidesTabBar: true,
@@ -64,6 +65,7 @@ export default (signedIn = false) =>
               activeBackgroundColor: '#707070',
               style: {
                 backgroundColor: '#dedede',
+                borderTopLeftRadius: 35,
               },
             },
           }
