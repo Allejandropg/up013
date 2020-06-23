@@ -7,15 +7,6 @@ export default {
     pass: process.env.MAIL_PASS,
   },
   default: {
-    fron: 'Equipe Gobarber <noreply@gobarber.com  >',
+    fron: 'Equipe Up13 <noreply@up13.com  >',
   },
 };
-/**
- *  Amazon SES
- * Mailgun
- * sparkpost
- * Mandril(MailChimp)
- * gmail x
- *
- * Mailtrap (DEV)
- */

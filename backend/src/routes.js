@@ -9,6 +9,7 @@ import ProviderController from './app/controllers/ProviderController';
 import AvailableController from './app/controllers/AvailableController';
 import CommandController from './app/controllers/CommandController';
 import NotificationController from './app/controllers/NotificationController';
+import ProductController from './app/controllers/ProductController';
 
 import authMiddleware from './app/middlewares/auth';
 import ScheduleController from './app/controllers/ScheduleController';
@@ -25,6 +26,11 @@ routes.post('/users/forgotpassword/', UserController.send);
 routes.post('/sessions/', SessionController.store);
 routes.post('/sessions/token/', SessionController.storeRegister);
 routes.put('/sessions/updateForgot/', SessionController.updateForgot);
+
+routes.get('/products', ProductController.read);
+routes.post('/products', ProductController.store);
+routes.put('/products/:id', ProductController.update);
+routes.delete('/products/:id', ProductController.delete);
 
 routes.use(authMiddleware);
 // users

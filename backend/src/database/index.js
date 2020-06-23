@@ -4,10 +4,11 @@ import mongoose from 'mongoose';
 import User from '../app/models/User'; // model do usuario
 import File from '../app/models/File'; // model do File
 import Command from '../app/models/Command'; // model do Command
+import Product from '../app/models/Product'; // model do Product
 // config
 import databaseConfig from '../config/database'; // configuração do db
 
-const models = [User, File, Command]; // array para inicialização de models
+const models = [User, File, Command, Product]; // array para inicialização de models
 
 class Database {
   constructor() {

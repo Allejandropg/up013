@@ -18,32 +18,37 @@ class UserController {
       name: Yup.string().required(),
       email: Yup.string()
         .email()
-        .required()
+        .required(),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
     const userExists = await User.findOne({ where: { email: req.body.email } });
-    const password = Math.random().toString(36).slice(-10);
+    const password = Math.random()
+      .toString(36)
+      .slice(-10);
     if (userExists) {
       return res.status(400).json({ erro: 'User already exists.' });
     }
     try {
-      const result = await User.create({...req.body, password});
+      const result = await User.create({ ...req.body, password });
       // ,// password_time:  new Date()
 
       const user = {
         name: result.name,
         email: result.email,
         password,
-        link: process.env.SITE_URL+'/welcome/'+jwt.sign({
-          id: result.id,
-          date: addDays(parseISO(new Date()),7)
-        },
-        authConfig.secret, {
-          expiresIn: authConfig.expiresIn,
-        })
+        link: `${process.env.SITE_URL}/welcome/${jwt.sign(
+          {
+            id: result.id,
+            date: addDays(parseISO(new Date()), 7),
+          },
+          authConfig.secret,
+          {
+            expiresIn: authConfig.expiresIn,
+          }
+        )}`,
       };
       // date: addDays(parseISO(new Date()),1)
 
@@ -54,12 +59,12 @@ class UserController {
         context: {
           user: user.name,
           password: user.password,
-          link: user.link
+          link: user.link,
         },
       });
 
       return res.json({ id, name, email, provider });
-    }catch(error){
+    } catch (error) {
       return res.json({ error });
     }
   }
@@ -100,7 +105,7 @@ class UserController {
       return res.status(401).json({ erro: 'Password does not match' });
     }
 
-    if (oldPassword && password && oldPassword === password ) {
+    if (oldPassword && password && oldPassword === password) {
       return res.status(400).json({ error: 'Validation fails' });
     }
     // console.log('updateUser',oldPassword,password);
@@ -122,7 +127,7 @@ class UserController {
     const schema = Yup.object().shape({
       email: Yup.string()
         .email()
-        .required()
+        .required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -130,22 +135,29 @@ class UserController {
     }
     const userExists = await User.findOne({ where: { email: req.body.email } });
     if (!userExists) {
-      return res.status(200).json({error:'If your user exists an email will be sent to him with a new password.' });
+      return res.status(200).json({
+        error:
+          'If your user exists an email will be sent to him with a new password.',
+      });
     }
-    const password = Math.random().toString(36).slice(-10);
+    const password = Math.random()
+      .toString(36)
+      .slice(-10);
     try {
-
       const user = {
         name: userExists.name,
         email: userExists.email,
         password,
-        link: process.env.SITE_URL+'/forgot/'+jwt.sign({
-          id: userExists.id,
-          date: addMinutes(parseISO(new Date()),1)
-        },
-        authConfig.secret, {
-          expiresIn: authConfig.expiresIn,
-        })
+        link: `${process.env.SITE_URL}/forgot/${jwt.sign(
+          {
+            id: userExists.id,
+            date: addMinutes(parseISO(new Date()), 1),
+          },
+          authConfig.secret,
+          {
+            expiresIn: authConfig.expiresIn,
+          }
+        )}`,
       };
       // date: addDays(parseISO(new Date()),1)
 
@@ -156,12 +168,14 @@ class UserController {
         context: {
           user: user.name,
           password: user.password,
-          link: user.link
+          link: user.link,
         },
       });
 
-      return res.json({ msg: 'If your user exists an email will be sent to him' });
-    }catch(error){
+      return res.json({
+        msg: 'If your user exists an email will be sent to him',
+      });
+    } catch (error) {
       return res.json({ error });
     }
   }
