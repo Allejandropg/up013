@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, Left, Avatar, Info, Name, Time } from './styles';
 
-export default function Command({ data, onCancel }) {
+export default function Command({ data, navigation, onCancel }) {
   const dateParsed = useMemo(() => {
     return formatRelative(parseISO(data.date), new Date(), {
       locale: pt,
@@ -16,7 +16,10 @@ export default function Command({ data, onCancel }) {
   }, [data.date]);
 
   return (
-    <Container past={data.past}>
+    <Container
+      past={data.past}
+      onPress={() => navigation.navigate('Command', { command: data })}
+    >
       <Left>
         <Avatar
           source={{
@@ -31,12 +34,12 @@ export default function Command({ data, onCancel }) {
           <Time>{dateParsed}</Time>
         </Info>
       </Left>
-      {/* {data.cancelable && !data.canceled_at && (
-        <TouchableOpacity onPress={() => onCancel()}>
+      {data.canceled_at && (
+        <>
           <Icon name="highlight-off" size={20} color="#F64c75" />
           <Time>Cancelar</Time>
-        </TouchableOpacity>
-      )} */}
+        </>
+      )}
     </Container>
   );
 }

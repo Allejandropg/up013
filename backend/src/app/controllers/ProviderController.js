@@ -4,7 +4,7 @@ import File from '../models/File';
 class ProviderController {
   async index(req, res) {
     const provider = await User.findAll({
-      where: { provider: true },
+      where: { provider: true, master: false },
       attributes: ['id', 'email', 'name', 'avatar_id'],
       include: [
         {

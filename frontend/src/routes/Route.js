@@ -15,7 +15,7 @@ export default function RouteWrapper({
   ...rest
 }) {
   const { signed } = store.getState().auth;
-  const { profile } = store.getState().user;
+  // const { profile } = store.getState().user;
 
   if (!signed && isPrivate) {
     return <Redirect to="/" />;
@@ -23,7 +23,7 @@ export default function RouteWrapper({
   if (signed && !isPrivate) {
     return <Redirect to="/profile" />;
   }
-  console.tron.log('Route.js',store.getState())
+  // console.tron.log('Route.js',store.getState())
   const Layout = signed ? DefaultLayout : AuthLayout;
 
   return (

@@ -38,13 +38,14 @@ export default function Dashboard() {
       const data = range.map(hour => {
         const checkDate = setSeconds(setMinutes(setHours(date, hour), 0), 0);
         const compareDate = utcToZonedTime(checkDate, timezone);
+        // console.tron.log('timezone', compareDate, checkDate, new Date());
 
         return {
           time: `${hour}:00h`,
           past: isBefore(compareDate, new Date()),
-          command: response.data.find(a =>(
+          command: response.data.find(a =>
             isEqual(parseISO(a.date), compareDate)
-          )),
+          ),
         };
       });
 
@@ -75,9 +76,7 @@ export default function Dashboard() {
         {schedule.map(time => (
           <Time key={time.time} past={time.past} available={!time.command}>
             <strong>{time.time}</strong>
-            <span>
-              {time.command ? time.command.user.name : 'Em aberto'}
-            </span>
+            <span>{time.command ? time.command.user.name : 'Em aberto'}</span>
           </Time>
         ))}
       </ul>

@@ -1,12 +1,19 @@
 import React, { useMemo, useEffect } from 'react';
-import { formatRelative, parseISO } from 'date-fns';
+import { format, parseISO, addHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-import { TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import ptBR from 'date-fns/locale/pt-BR';
 import PropTypes from 'prop-types';
 
-import { Container, Avatar, Name, Time, SubmitButton } from './styles';
-import Background from '~/components/Background';
+import {
+  Container,
+  Title,
+  SubTitle,
+  Avatar,
+  Name,
+  Time,
+  SubmitButton,
+} from './styles';
+import BackgroundInternal from '~/components/BackgroundInternal';
 
 import api from '~/services/api';
 
@@ -15,11 +22,16 @@ export default function Confirm({ navigation }) {
   const time = navigation.getParam('time');
 
   const dateFormatted = useMemo(() =>
-    formatRelative(parseISO(time), new Date(), { locale: pt })
+    format(parseISO(time), "dd 'de' MMMM 'de' yyyy", { locale: pt })
   );
-  // useEffect(() => {
-  //   // console.tron.log('confirm', time);
-  // }, [time]);
+
+  const hourFormatted = useMemo(() =>
+    format(addHours(parseISO(time), 1), 'HH:mm', {
+      timeZone: 'America/Sao_Paulo',
+      locale: pt,
+      addSuffix: true,
+    })
+  );
 
   async function handleAddCommand() {
     await api.post(`commands`, {
@@ -30,8 +42,10 @@ export default function Confirm({ navigation }) {
   }
 
   return (
-    <Background>
+    <BackgroundInternal backButton navigation={navigation}>
       <Container>
+        <Title>AGENDAMENTO</Title>
+        <SubTitle>Confirmação:</SubTitle>
         <Avatar
           source={{
             uri: provider.avatar
@@ -41,26 +55,19 @@ export default function Confirm({ navigation }) {
         />
         <Name>{provider.name}</Name>
         <Time>{dateFormatted}</Time>
+        <Time>{hourFormatted}</Time>
         <SubmitButton onPress={() => handleAddCommand()}>
-          Confirm Command
+          Confirmar
         </SubmitButton>
       </Container>
-    </Background>
+    </BackgroundInternal>
   );
 }
 
-Confirm.navigationOptions = ({ navigation }) => ({
-  title: 'Confirm Command',
-  headerLeft: () => (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.goBack();
-      }}
-    >
-      <Icon name="chevron-left" size={20} color="#707070" />
-    </TouchableOpacity>
-  ),
-});
+Confirm.navigationOptions = {
+  title: '',
+  headerLeft: () => null,
+};
 
 Confirm.propTypes = {
   navigation: PropTypes.shape({

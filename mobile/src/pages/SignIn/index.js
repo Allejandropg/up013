@@ -7,12 +7,14 @@ import { signInRequest } from '~/store/modules/auth/actions';
 import BackgroundExternal from '~/components/BackgroundExternal';
 
 import {
+  Area,
   Container,
   Title,
   Form,
   FormInput,
   ForgotLink,
   ForgotLinkText,
+  AreaButtons,
   SubmitButton,
   SignLink,
   SignLinkText,
@@ -31,44 +33,47 @@ export default function SignIn({ navigation }) {
 
   return (
     <BackgroundExternal>
-      <Container>
-        <Title>Login</Title>
-        <Form>
-          <FormInput
-            icon="mail-outline"
-            keyboardType="email-address"
-            autoCorrect={false}
-            autoCapitalize="none"
-            placeholder="Digite seu e-mail"
-            returnKeyType="next"
-            onSubmitEditing={() => passWordRef.current.focus()}
-            value={email}
-            onChangeText={setEmail}
-          />
-          <FormInput
-            icon="lock-outline"
-            secureTextEntry
-            placeholder="Sua senha secreta"
-            ref={passWordRef}
-            returnKeyType="send"
-            onSubmitEditing={handleSubmit}
-            value={password}
-            onChangeText={setPassword}
-          />
+      <Area>
+        <Container>
+          <Form>
+            <Title>Login</Title>
+            <FormInput
+              icon="mail-outline"
+              keyboardType="email-address"
+              autoCorrect={false}
+              autoCapitalize="none"
+              placeholder="Digite seu e-mail"
+              returnKeyType="next"
+              onSubmitEditing={() => passWordRef.current.focus()}
+              value={email}
+              onChangeText={setEmail}
+            />
+            <FormInput
+              icon="lock-outline"
+              secureTextEntry
+              placeholder="Sua senha secreta"
+              ref={passWordRef}
+              returnKeyType="send"
+              onSubmitEditing={handleSubmit}
+              value={password}
+              onChangeText={setPassword}
+            />
 
-          <ForgotLink onPress={() => navigation.navigate('Forgot')}>
-            <ForgotLinkText>Esqueci a senha</ForgotLinkText>
-          </ForgotLink>
-          <SubmitButton loading={loading} onPress={handleSubmit}>
-            Entrar
-          </SubmitButton>
-        </Form>
-
-        <SignLink onPress={() => navigation.navigate('SignUp')}>
-          <SignLinkText>Não tem cadastro?</SignLinkText>
-          <SignLinkText>Crie sua conta</SignLinkText>
-        </SignLink>
-      </Container>
+            <ForgotLink onPress={() => navigation.navigate('Forgot')}>
+              <ForgotLinkText>Esqueci a senha</ForgotLinkText>
+            </ForgotLink>
+          </Form>
+          <AreaButtons>
+            <SubmitButton loading={loading} onPress={handleSubmit}>
+              Entrar
+            </SubmitButton>
+            <SignLink onPress={() => navigation.navigate('SignUp')}>
+              <SignLinkText>Não tem cadastro?</SignLinkText>
+              <SignLinkText>Crie sua conta</SignLinkText>
+            </SignLink>
+          </AreaButtons>
+        </Container>
+      </Area>
     </BackgroundExternal>
   );
 }

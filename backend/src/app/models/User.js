@@ -11,7 +11,10 @@ class User extends Model {
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
         // password_time: Sequelize.DATE,
+        phone: Sequelize.STRING,
+        master: Sequelize.BOOLEAN,
         provider: Sequelize.BOOLEAN,
+        birthday: Sequelize.DATE,
         is_active: Sequelize.BOOLEAN,
       },
       {

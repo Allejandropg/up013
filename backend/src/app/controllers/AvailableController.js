@@ -7,6 +7,7 @@ import {
   format,
   isAfter,
 } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import { Op } from 'sequelize';
 import Command from '../models/Command';
 
@@ -41,6 +42,7 @@ class AvailableController {
       '18:00',
       '19:00',
     ];
+
     const available = schedule.map(time => {
       const [hour, minute] = time.split(':');
       const value = setSeconds(
@@ -49,7 +51,7 @@ class AvailableController {
       );
       return {
         time,
-        value: format(value, "yyyy-MM-dd'T'HH:mm:ssxxx"),
+        value: format(value, "yyyy-MM-dd'T'HH:mm:ssxxx", { locale: pt }),
         available:
           isAfter(value, new Date()) &&
           !command.find(a => format(a.date, 'HH:mm') === time),

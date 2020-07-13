@@ -17,7 +17,7 @@ class CommandController {
     const commands = await Command.findAll({
       where: { user_id: req.userId, canceled_at: null },
       order: ['date'],
-      attributes: ['id', 'date', 'past', 'cancelable'],
+      attributes: ['id', 'date', 'past', 'canceled_at', 'cancelable'],
       limit: 20,
       offset: (page - 1) * 20,
       include: [

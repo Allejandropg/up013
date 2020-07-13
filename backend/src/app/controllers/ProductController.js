@@ -10,7 +10,7 @@ class ProductController {
       .json(await Product.findAll({ where: { is_active: true } }));
   }
 
-  // Adiciona um novo usuário
+  // Adiciona um novo produto
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),

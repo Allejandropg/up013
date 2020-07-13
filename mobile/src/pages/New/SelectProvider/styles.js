@@ -3,14 +3,27 @@ import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
+  padding: 0 18px;
+`;
+
+export const Title = styled.Text`
+  font-size: 24px;
+  color: #000000;
+  font-weight: bold;
+  margin: 0 5px 0px;
+`;
+
+export const SubTitle = styled.Text`
+  font-size: 18px;
+  color: #b90008;
+  margin: 0 5px 25px;
 `;
 
 export const ProvidersList = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
   numColumns: 2,
 })`
-  margin-top: 60px;
-  padding: 0 20px;
+  /* padding: 0 20px; */
 `;
 
 export const Provider = styled(RectButton)`

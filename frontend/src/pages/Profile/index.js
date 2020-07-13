@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 
@@ -32,8 +32,12 @@ export default function Profile() {
         <Input name="email" type="email" placeholder="Seu endereço de email" />
 
         <hr />
-        <p>Sua senha deve ter no mínio 6 caracteres e conter pelo menos um caractér especial, um número, uma letra maiscula e uma minuscula para ser considerada forte.</p>
-        <hr/>
+        <p>
+          Sua senha deve ter no mínio 6 caracteres e conter pelo menos um
+          caractér especial, um número, uma letra maiscula e uma minuscula para
+          ser considerada forte.
+        </p>
+        <hr />
         <Input
           name="oldPassword"
           type="password"
@@ -42,24 +46,26 @@ export default function Profile() {
         <PassInput
           value={password}
           handleChanges={e => {
-            console.log(e.target.value)
-            return setPassword(e.target.value)}}
+            // console.log(e.target.value);
+            return setPassword(e.target.value);
+          }}
           placeholder="Sua nova senha"
           name="password"
-         />
+        />
         <PassInput
           value={confirmPassword}
           handleChanges={e => {
-            console.log(e.target.value)
-            return setConfirmPassword(e.target.value)}}
+            // console.log(e.target.value);
+            return setConfirmPassword(e.target.value);
+          }}
           placeholder="Confirm sua senha"
           name="confirmPassword"
-         />
+        />
 
         <button type="submit">Atualizar perfil</button>
       </Form>
       <button type="button" onClick={handleSignOut}>
-        Sair do GoBarber
+        Sair do UP013
       </button>
     </Container>
   );

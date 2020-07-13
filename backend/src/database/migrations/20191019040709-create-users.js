@@ -24,10 +24,19 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      master: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
       provider: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false,
+      },
+      birthday: {
+        type: Sequelize.DATE,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,

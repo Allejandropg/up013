@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.modulo10"
+        applicationId "com.up013"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -202,7 +202,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 project.ext.vectoricons = [
-    iconFontNames: [ 'MaterialIcons.ttf' ]
+    iconFontNames: [ 'MaterialIcons.ttf','FontAwesome.ttf' ]
 ]
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

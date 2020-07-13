@@ -2,14 +2,15 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Wrapper = styled.div`
-min-height: 100%;
-background: linear-gradient(-90deg, #7159c1, #ab59c1);
-padding-bottom: 1px;
+  min-height: 100%;
+  background: #333;
+  padding-bottom: 1px;
 `;
 export const Container = styled.div`
   margin: auto;
   width: 100%;
-  max-width: 315px;
+  max-width: 900px;
+  padding: 0 15px;
   text-align: center;
   form {
     display: flex;
@@ -37,7 +38,7 @@ export const Container = styled.div`
     button {
       margin: 5px 0;
       height: 44px;
-      background: #3b9eff;
+      background: #060c62;
       font-weight: bold;
       color: #fff;
       border: 0;
@@ -45,7 +46,7 @@ export const Container = styled.div`
       font-size: 16px;
       transition: background 0.2s;
       &:hover {
-        background: ${darken(0.03, '#3b9eff')};
+        background: ${darken(0.03, '#060C62')};
       }
     }
 

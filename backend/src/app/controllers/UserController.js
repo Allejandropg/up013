@@ -9,7 +9,11 @@ import Mail from '../../lib/Mail';
 class UserController {
   // Adiciona um novo usuário
   async read(req, res) {
-    return res.json(await User.findAll());
+    return res.json(
+      await User.findAll({
+        where: { master: true, is_active: true },
+      })
+    );
   }
 
   // Adiciona um novo usuário

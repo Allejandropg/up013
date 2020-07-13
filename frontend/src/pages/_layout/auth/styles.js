@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
-  background: linear-gradient(-90deg, #7159c1, #ab59c1);
+  background: #333;
 `;
 export const Container = styled.div`
   width: 100%;
@@ -38,7 +38,7 @@ export const Container = styled.div`
     button {
       margin: 5px 0;
       height: 44px;
-      background: #3b9eff;
+      background: #060c62;
       font-weight: bold;
       color: #fff;
       border: 0;
@@ -46,7 +46,7 @@ export const Container = styled.div`
       font-size: 16px;
       transition: background 0.2s;
       &:hover {
-        background: ${darken(0.03, '#3b9eff')};
+        background: ${darken(0.03, '#060C62')};
       }
     }
 

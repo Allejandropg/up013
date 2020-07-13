@@ -12,7 +12,8 @@ import SelectProvider from './pages/New/SelectProvider';
 import SelectDateTime from './pages/New/SelectDateTime';
 import Confirm from './pages/New/Confirm';
 
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/Dashboard/List';
+import Command from './pages/Dashboard/Command';
 import Profile from './pages/Profile';
 
 export default (signedIn = false) =>
@@ -25,7 +26,27 @@ export default (signedIn = false) =>
         }),
         App: createBottomTabNavigator(
           {
-            Dashboard,
+            Dashboard: {
+              screen: createStackNavigator(
+                {
+                  Dashboard,
+                  Command,
+                },
+                {
+                  defaultNavigationOptions: {
+                    headerTransparent: true,
+                  },
+                }
+              ),
+              navigationOptions: {
+                title: null,
+                headerLeft: null,
+                tabBarLabel: 'Histórico',
+                tabBarIcon: ({ tintColor }) => {
+                  return <Icon name="restore" size={20} color={tintColor} />;
+                },
+              },
+            },
             New: {
               screen: createStackNavigator(
                 {
@@ -36,28 +57,26 @@ export default (signedIn = false) =>
                 {
                   defaultNavigationOptions: {
                     headerTransparent: true,
-                    headerTintColor: '#707070',
-                    headerLeftContainerStyle: {
-                      marginLeft: 20,
-                    },
-                    headerTitleStyle: {
-                      textAlign: 'center',
-                    },
                   },
                 }
               ),
               navigationOptions: {
-                tabBarVisible: false,
                 tabBarLabel: 'Agendar',
-                tabBarIcon: (
-                  <Icon name="add-circle-outline" size={20} color="#707070" />
-                ),
+                tabBarIcon: ({ tintColor }) => {
+                  return (
+                    <Icon
+                      name="add-circle-outline"
+                      size={20}
+                      color={tintColor}
+                    />
+                  );
+                },
               },
             },
             Profile,
           },
           {
-            initialRouteName: 'Profile',
+            initialRouteName: 'Dashboard',
             resetOnBlur: true,
             tabBarOptions: {
               keyboardHidesTabBar: true,
@@ -66,6 +85,12 @@ export default (signedIn = false) =>
               style: {
                 backgroundColor: '#dedede',
                 borderTopLeftRadius: 35,
+                paddingLeft: '5%',
+                paddingRight: '5%',
+              },
+              tabStyle: {
+                marginLeft: '3%',
+                marginRight: '3%',
               },
             },
           }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
-import logo from '~/assets/logo.svg';
+import logo from '~/assets/logo.png';
 import { sendNewPass } from '~/store/modules/auth/actions';
 
 // import { Container } from './styles';
@@ -17,8 +17,8 @@ const schema = Yup.object().shape({
 
 export default function SignUp() {
   const dispatch = useDispatch();
-  function handleSubmit({email}) {
-    console.log(email)
+  function handleSubmit({ email }) {
+    // console.log(email)
     dispatch(sendNewPass(email));
   }
   return (

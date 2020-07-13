@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'modulo10' do
-  # Pods for modulo10
+target 'up013' do
+  # Pods for up013
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -36,7 +36,7 @@ target 'modulo10' do
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
-  target 'modulo10Tests' do
+  target 'up013Tests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -44,10 +44,10 @@ target 'modulo10' do
   use_native_modules!
 end
 
-target 'modulo10-tvOS' do
-  # Pods for modulo10-tvOS
+target 'up013-tvOS' do
+  # Pods for up013-tvOS
 
-  target 'modulo10-tvOSTests' do
+  target 'up013-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

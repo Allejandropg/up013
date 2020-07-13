@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { signInSuccess,signInRegisterSuccess, signFailure } from './actions';
+import { signInSuccess, signInRegisterSuccess, signFailure } from './actions';
 
 export function* signIn({ payload }) {
   try {
@@ -14,7 +14,6 @@ export function* signIn({ payload }) {
       email,
       password,
     });
-    // console.tron.log('try', response);
     const { token, user } = response.data;
 
     if (!user.is_active) {
@@ -23,8 +22,8 @@ export function* signIn({ payload }) {
       return;
     }
 
-    if (!user.provider) {
-      toast.error('usuário não é prestador');
+    if (!user.provider && !user.master) {
+      toast.error('usuário não é autorizado');
       yield put(signFailure());
       return;
     }
@@ -33,11 +32,10 @@ export function* signIn({ payload }) {
     yield put(signInSuccess(token, user));
     history.push('/dashboard');
   } catch (error) {
-    toast.error('Falha na autenticação, verifique seus dados.'+error);
+    toast.error(`Falha na autenticação, verifique seus dados.${error}`);
     yield put(signFailure());
   }
 }
-
 
 export function* signInRegister({ payload }) {
   try {
@@ -46,10 +44,9 @@ export function* signInRegister({ payload }) {
     const response = yield call(api.post, 'sessions/token', {
       email,
       password,
-      token
+      token,
     });
-
-    const user = response.data.user;
+    const { user } = response.data;
     token = response.data.token;
 
     if (!user.provider) {
@@ -63,13 +60,13 @@ export function* signInRegister({ payload }) {
 
     try {
       const profile = {
-        name:user.name,
+        name: user.name,
         email,
-        is_active: true
+        is_active: true,
       };
       yield call(api.put, 'users', profile);
     } catch (err) {
-
+      toast.error('Falha na autenticação, tente novamente mais tarde.');
     }
     history.push('/profile');
   } catch (error) {
@@ -110,18 +107,17 @@ export function signOut() {
   history.push('/');
 }
 
-
 export function* sendNewPass({ payload }) {
   try {
     const { email } = payload;
-    console.tron.log('sendNewPass',payload);
+    console.tron.log('sendNewPass', payload);
     yield call(api.post, '/users/forgotpassword/', {
       email,
     });
 
     history.push('/');
   } catch (error) {
-    toast.error('Falha no envio, tente novamente mais tarde: '+error);
+    toast.error(`Falha no envio, tente novamente mais tarde: ${error}`);
     yield put(signFailure());
   }
 }
@@ -129,14 +125,14 @@ export function* sendNewPass({ payload }) {
 export function* signInForgotRequest({ payload }) {
   try {
     let { email, password, token } = payload;
-console.tron.log('forgotSaga',payload)
+    console.tron.log('forgotSaga', payload);
     const response = yield call(api.put, '/sessions/updateForgot/', {
       email,
       password,
-      token
+      token,
     });
 
-    const user = response.data.user;
+    const { user } = response.data;
     token = response.data.token;
 
     if (!user.provider) {
@@ -150,17 +146,15 @@ console.tron.log('forgotSaga',payload)
 
     try {
       const profile = {
-        name:user.name,
+        name: user.name,
         email,
-        is_active: true
+        is_active: true,
       };
       yield call(api.put, 'users', profile);
-    } catch (err) {
-
-    }
+    } catch (err) {}
     history.push('/profile');
   } catch (error) {
-    toast.error('Falha na autenticação, verifique seus dados.'+error);
+    toast.error(`Falha na autenticação, verifique seus dados.${error}`);
     yield put(signFailure());
   }
 }

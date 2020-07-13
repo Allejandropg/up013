@@ -78,7 +78,7 @@ export const Notification = styled.div`
     font-size: 12px;
     border: 0;
     background: none;
-    color: ${lighten(0.2, '#7159C1')};
+    color: ${lighten(0.2, '#060C62')};
     padding: 0 5px;
     margin: 0 5px;
     border-left: 1px solid rgba(255, 255, 255.1);

@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 
 import { signUpRequest } from '~/store/modules/auth/actions';
 
-import logo from '~/assets/logo.svg';
+import logo from '~/assets/logo.png';
 
 // import { Container } from './styles';
 
@@ -14,7 +14,7 @@ const schema = Yup.object().shape({
   name: Yup.string().required('O nome é obrigatório'),
   email: Yup.string()
     .email('Insira um e-mail válido')
-    .required('O e-mail é obrigatório')
+    .required('O e-mail é obrigatório'),
 });
 
 export default function SignUp() {

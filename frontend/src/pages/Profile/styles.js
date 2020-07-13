@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  max-width: 600px;
+  max-width: 350px;
   margin: 50px auto;
 
   form {
@@ -21,7 +21,7 @@ export const Container = styled.div`
       &::placeholder {
         color: rgba(255, 255, 255, 0.7);
       }
-      &[type="password"]{
+      &[type='password'] {
         border: 2px solid;
       }
     }
@@ -41,7 +41,7 @@ export const Container = styled.div`
     button {
       margin: 5px 0;
       height: 44px;
-      background: #3b9eff;
+      background: #060c62;
       font-weight: bold;
       color: #fff;
       border: 0;
@@ -49,7 +49,7 @@ export const Container = styled.div`
       font-size: 16px;
       transition: background 0.2s;
       &:hover {
-        background: ${darken(0.03, '#3b9eff')};
+        background: ${darken(0.03, '#060C62')};
       }
     }
 
@@ -76,7 +76,7 @@ export const Container = styled.div`
     width: 100%;
     margin: 10px 0 0;
     height: 44px;
-    background: #f64c75;
+    background: #b90008;
     font-weight: bold;
     color: #fff;
     border: 0;
@@ -84,7 +84,7 @@ export const Container = styled.div`
     font-size: 16px;
     transition: background 0.2s;
     &:hover {
-      background: ${darken(0.03, '#f64c75')};
+      background: ${darken(0.03, '#B90008')};
     }
   }
 `;

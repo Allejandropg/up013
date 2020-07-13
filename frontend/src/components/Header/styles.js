@@ -4,6 +4,7 @@ export const Container = styled.div`
   background: #fff;
   padding: 0 30px;
 `;
+
 export const Content = styled.div`
   height: 64px;
   max-width: 900px;
@@ -17,6 +18,7 @@ export const Content = styled.div`
     align-items: center;
 
     img {
+      width: 75px;
       margin-right: 20px;
       padding-right: 20px;
       border-right: 1px solid #eee;
@@ -24,7 +26,11 @@ export const Content = styled.div`
 
     a {
       font-weight: bold;
-      color: #7159c1;
+      color: #707070;
+      text-transform: uppercase;
+      & + a {
+        margin-left: 15px;
+      }
     }
   }
 

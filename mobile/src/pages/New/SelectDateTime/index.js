@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 
-import { Container, HourList, Hour, Title } from './styles';
-import Background from '~/components/Background';
+import { Alert } from 'react-native';
+import {
+  Container,
+  Title,
+  SubTitle,
+  HourList,
+  Hour,
+  HourTitle,
+} from './styles';
+import BackgroundInternal from '~/components/BackgroundInternal';
 import DateInput from '~/components/DateInput';
 
 import api from '~/services/api';
@@ -34,35 +40,41 @@ export default function SelectDateTime({ navigation }) {
   }
 
   return (
-    <Background>
+    <BackgroundInternal backButton navigation={navigation}>
       <Container>
+        <Title>AGENDAMENTO</Title>
+        <SubTitle>Selecione o dia e horário:</SubTitle>
         <DateInput date={date} onChange={setDate} />
         <HourList
           data={hours}
           keyExtractor={item => item.time}
-          renderItem={({ item }) => (
-            <Hour
-              onPress={() => handleSelectHour(item.value)}
-              enable={item.available}
-            >
-              <Title>{item.time}</Title>
-            </Hour>
-          )}
+          renderItem={({ item }) => {
+            return (
+              <Hour
+                onPress={() => {
+                  if (item.available) {
+                    handleSelectHour(item.value);
+                  } else {
+                    Alert.alert('', 'Horário não está disponível');
+                  }
+                }}
+                enable={item.available}
+              >
+                <HourTitle enable={item.available}>{item.time}</HourTitle>
+              </Hour>
+            );
+          }}
         />
       </Container>
-    </Background>
+    </BackgroundInternal>
   );
 }
 
 SelectDateTime.navigationOptions = ({ navigation }) => ({
-  title: 'Select the Time',
-  headerLeft: () => (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.goBack();
-      }}
-    >
-      <Icon name="chevron-left" size={20} color="#707070" />
-    </TouchableOpacity>
-  ),
+  title: '',
+  headerLeft: () => null,
+});
+
+SelectDateTime.prototype = PropTypes.shape({
+  navigation: PropTypes.element.isRequired,
 });
